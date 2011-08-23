@@ -5,35 +5,26 @@
   <%= stylesheet_link_tag :all %>
   <%= javascript_include_tag "jquery-1.4.4.min","LAB.min","underscore-min","backbone-min","jquery.tmpl.min" %>
   <%= csrf_meta_tag %>
-   <script>
-   jQuery(function($){
-    var posts;
-    $.get("/posts.json",function(data,status,xhr){
-      posts = data;
-      console.log(data);      
-      console.log(status);      
-    });
-    var posts = [
-     { title: "Title 1",caption: "Caption 1",content: "Content 1" },
-     { title: "Title 2",caption: "Caption 2",content: "Content 2" }
-    ];
-    var post_markup = "<tr><td>${title}</td><td>${caption}</td><td>${content}</td></tr>";
-    $.template( "postTemplate",post_markup);
-    $.tmpl( "postTemplate", posts).appendTo("#postList");
-     });
+  <script type="text/javascript">
+    var Post = Backbone.Model.extend({
+      urlRoot: "/posts"
+    })
+
+    var post = new Post({
+      title: "Post lists"
+    })
+    
+    item.save()
+    var save = _.bind(item.save,item);
+    _.delay(save,5000, {title: "Changed Title"})
+
+    
+
    </script>
 </head>
 <body>
-<div id="postList1">
-</div>
-<table id="postList">
-  <tr>
-    <th>Title</th>
-    <th>Caption</th>
-    <th>Content</th>
-  </th>
-</table>
-<%= yield %>
-
+  <div id="container">
+    <%= yield %>
+  </div>
 </body>
 </html>
