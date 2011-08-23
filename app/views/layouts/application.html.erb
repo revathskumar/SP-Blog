@@ -3,24 +3,8 @@
 <head>
   <title>Spa : Single Page Application </title>
   <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag "jquery-1.4.4.min","LAB.min","underscore-min","backbone-min","jquery.tmpl.min" %>
+  <%= javascript_include_tag "jquery-1.4.4.min","LAB.min","underscore-min","backbone-min","jquery.tmpl.min","application" %>
   <%= csrf_meta_tag %>
-  <script type="text/javascript">
-    var Post = Backbone.Model.extend({
-      urlRoot: "/posts"
-    })
-
-    var post = new Post({
-      title: "Post lists"
-    })
-    
-    item.save()
-    var save = _.bind(item.save,item);
-    _.delay(save,5000, {title: "Changed Title"})
-
-    
-
-   </script>
 </head>
 <body>
   <div id="container">

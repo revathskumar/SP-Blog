@@ -12,7 +12,7 @@ development:
   database: spa_dev
   pool: 5
   username: root
-  password: mobme
+  password: root
   socket: /var/run/mysqld/mysqld.sock
 
 # Warning: The database defined as "test" will be erased and
@@ -25,7 +25,7 @@ test:
   database: spa_test
   pool: 5
   username: root
-  password: mobme
+  password: root
   socket: /var/run/mysqld/mysqld.sock
 
 production:
@@ -35,5 +35,5 @@ production:
   database: spa
   pool: 5
   username: root
-  password: mobme
+  password: root
   socket: /var/run/mysqld/mysqld.sock
