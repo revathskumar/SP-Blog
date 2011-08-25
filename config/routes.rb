@@ -2,7 +2,7 @@ Spa::Application.routes.draw do
 
   resources :posts
   
-  root :to => "dashboard#index"  
+  root :to => "dashboard#index"
 
 #  namespace :api do
 #    resources :posts

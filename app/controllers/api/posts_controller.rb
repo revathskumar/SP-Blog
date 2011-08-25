@@ -4,11 +4,7 @@ class Api::PostsController < ApplicationController
 
   def index
     @posts = Post.all
-    posts_hash = []
-    @posts.each do | post |
-      posts_hash << { :id => post.id, :title => post.title, :name => post.name, :content => post.content }
-    end
-    respond_with( posts_hash)
+    respond_with( @posts)
   end
 	
 end

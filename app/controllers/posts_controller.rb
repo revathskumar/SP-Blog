@@ -1,23 +1,30 @@
 class PostsController < ApplicationController
   
+#  respond_to :json
+
   # GET /posts
   def index
     @posts = Post.all
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @post }
-    end
+    render :json => @posts
+    
+#    respond_to :json
+#    respond_to do |format|
+#      format.html # show.html.erb
+#      format.xml  { render :xml => @post }
+#      respond_with( @posts)
+#      format.json  { render :json => @posts }
+#    end
   end
 
   # GET /posts/1
   # GET /posts/1.xml
   def show
     @post = Post.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @post }
-    end
+    render :json => @post
+#    respond_to do |format|
+#      format.html # show.html.erb
+#      format.xml  { render :xml => @post }
+#    end
   end
 
   # GET /posts/new
@@ -34,6 +41,7 @@ class PostsController < ApplicationController
   # GET /posts/1/edit
   def edit
     @post = Post.find(params[:id])
+    render :json => @post
   end
 
   # POST /posts

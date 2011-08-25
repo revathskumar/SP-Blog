@@ -7,8 +7,16 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
-  <div id="container">
-    <%= yield %>
+  <div id="notice">
+    
   </div>
+  <div id="container">
+    
+  </div>
+  <script type="text/javascript">
+    jQuery(function($){
+      App.init();
+    });
+  </script>
 </body>
 </html>
