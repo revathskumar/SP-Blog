@@ -1,0 +1,147 @@
+/* 
+    Document   : blog.css
+    Created on : 26 Aug, 2011, 7:02:44 PM
+    Author     : revath
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+
+html{
+/*  height: 90%;*/
+  overflow-y: scroll;
+}
+
+body{
+  
+}
+
+#content{
+  width: 60%;
+  margin: 0 auto;
+  border: 1px solid black;
+  padding: 10px;
+  
+}
+
+section{
+  overflow: auto;
+  min-height: 520px;
+}
+
+#container{
+  width: 60%;
+  height: 90%;
+  padding: 10px;
+  float: left;
+  border: 1px solid red;
+  
+}
+
+form textarea{
+  height:300px;
+  width: 100%;
+  resize:vertical;
+}
+
+form input{
+  width: 100%;
+}
+ul{
+  list-style: none;
+}
+
+h2{
+  margin-bottom: 2px;
+}
+
+h2 a{
+  text-decoration: none;
+}
+
+h2 a:hover{
+  color: #000; background-color:#FFF;
+}
+#list_posts{
+  padding: 0px;
+}
+
+#list_posts li div{
+  padding: 0 0 0px 15px;
+
+}
+
+#list_posts span{
+  float: right;
+  width: 100%;
+  text-align: right;
+  padding-right: 10px;
+  margin-bottom: 10px;
+}
+
+#list_posts li{
+  border-bottom: 5px solid #CCC;
+  padding: 0 0 20px 0;
+}
+
+
+form ul {
+  list-style: none;
+  padding: 0 10px;
+
+}
+
+nav ul{
+  list-style: none;
+}
+
+nav ul li{
+    display: inline;
+}
+
+nav ul li a{
+  width: 50px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bolder;
+/*  margin: 2px 10px;*/
+  padding: 2px 10px;
+}
+
+
+#sidebar{
+  width: 30%;
+  height: 90%;
+  border: 1px solid aqua;
+  float: right;
+  padding: 10px;
+}
+
+#sidebar ul{
+  list-style: none;
+}
+.post-footer ul{
+      padding: 0px;
+}
+.post-footer ul li{
+    display: inline;
+}
+
+.left{
+  float: left;
+}
+
+.right{
+  float: right;
+}
+footer{
+  clear:both;
+}

@@ -1,6 +1,9 @@
 Spa::Application.routes.draw do
 
   resources :posts
+
+  match "/:year/:month/:permalink" => "posts#show"
+  match "/:permalink" => "posts#show"
   
   root :to => "dashboard#index"
 

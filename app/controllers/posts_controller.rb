@@ -4,27 +4,19 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    @posts = Post.all
+    @posts = Post.find :all, :order => "posts.created_at DESC"
     render :json => @posts
-    
-#    respond_to :json
-#    respond_to do |format|
-#      format.html # show.html.erb
-#      format.xml  { render :xml => @post }
-#      respond_with( @posts)
-#      format.json  { render :json => @posts }
-#    end
   end
 
   # GET /posts/1
   # GET /posts/1.xml
   def show
-    @post = Post.find(params[:id])
+    if !params[:permalink].nil?
+      @post = Post.permalink params[:permalink]
+    else
+      @post = Post.find  params[:id]
+    end
     render :json => @post
-#    respond_to do |format|
-#      format.html # show.html.erb
-#      format.xml  { render :xml => @post }
-#    end
   end
 
   # GET /posts/new
@@ -49,15 +41,15 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(params[:post])
 
-    respond_to do |format|
-      if @post.save
-        format.html { redirect_to(@post, :notice => 'Post was successfully created.') }
-        format.xml  { render :xml => @post, :status => :created, :location => @post }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @post.errors, :status => :unprocessable_entity }
-      end
-    end
+#    respond_to do |format|
+#      if @post.save
+#        format.html { redirect_to(@post, :notice => 'Post was successfully created.') }
+#        format.xml  { render :xml => @post, :status => :created, :location => @post }
+#      else
+#        format.html { render :action => "new" }
+#        format.xml  { render :xml => @post.errors, :status => :unprocessable_entity }
+#      end
+#    end
   end
 
   # PUT /posts/1

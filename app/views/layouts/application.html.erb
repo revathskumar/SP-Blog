@@ -2,21 +2,51 @@
 <html>
 <head>
   <title>Spa : Single Page Application </title>
-  <%= stylesheet_link_tag :all %>
+  <%= stylesheet_link_tag :all,"blog" %>
   <%= javascript_include_tag "jquery-1.4.4.min","LAB.min","underscore-min","backbone-min","jquery.tmpl.min","application" %>
   <%= csrf_meta_tag %>
 </head>
 <body>
-  <div id="notice">
-    
+  <div id="content">
+    <header>
+      <h1> Blog : A Single Page Application </h1>
+    </header>
+    <nav>
+      <ul>
+        <li><a href="#/">Home</a></li>
+        <li><a href="#/new">New post</a></li>
+      </ul>
+    </nav>
+    <section>
+      <div id="notice">
+
+      </div>
+      <div id="container">
+
+      </div>
+      <div id="sidebar">
+        <ul>
+          <li>Author : RSK</li>
+          <li>Email : rsk@revathskumar.com</li>
+          <li>Website : <a href="http://blog.revathskumar.com">revathskumar.com </a> </li>
+        </ul>
+      </div>
+    </section>
+    <footer>
+      <center>&copy; 2011</center>
+    </footer>
   </div>
-  <div id="container">
-    
-  </div>
+
   <script type="text/javascript">
     jQuery(function($){
       App.init();
     });
+  </script>
+  <script type="text/html" id="post_list">
+    <li>
+      <h2><a href='#/${permalink}'>${title}</a></h2>
+      <div>${content}</div><span><a href='#/${permalink}'>more &gt;&gt;</a></span>
+    </li>
   </script>
 </body>
 </html>

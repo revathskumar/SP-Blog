@@ -6,13 +6,7 @@ jQuery(function($){
 
   var Post = Backbone.Model.extend({
     url: function(){
-      return (this.id)?"/posts/"+this.id : "/posts"
-    },
-    defaults:{
-      post: {
-        name: "Default Name",
-        title: "Default Title"
-      }
+      return (this.id)?"/posts/"+this.id : (this.permalink ? "/"+ this.permalink : "/posts")
     },
     initialize: function(){
       console.log("Post Model initialized")
@@ -25,11 +19,6 @@ jQuery(function($){
       model:Post,
       url:"/posts"
   })
-//
-//  var posts = new Posts
-//  postData = posts.fetch();
-//  postData.get(1);
-//  console.log(postData.get(1));
 
 
 //  Backbone View Index
@@ -38,9 +27,9 @@ jQuery(function($){
     el: $("#container"),
     render : function() {
       console.log("post view render");
-      $(this.el).html("<h3><a href='#new'>New post</a></h3><ul id='list_posts'></ul>");
+      $(this.el).html("<ul id='list_posts'></ul>");
       if(this.posts.length > 0){
-        $.template("posts_list","<li><a href='#posts/${id}'>${title}</a></li>");
+        $.template("posts_list",$("#post_list"));
         $.tmpl("posts_list",this.posts).appendTo("#list_posts");
       }else{
         $("#list_posts").append("<li> Sorry No posts was found</li>");
@@ -60,6 +49,7 @@ jQuery(function($){
       "submit form":"save"
     },
     initialize:function(args){
+      console.log("Initialized Edit view for posts")
       this.post = this.options.post
       this.render();
     },
@@ -69,38 +59,61 @@ jQuery(function($){
             <li>Title</li>\n\
             <li><input type='text' name='post[\"title\"]'/></li>\n\
             <li>Content</li>\n\
-            <li><textarea name='post[\"content\"]'></textarea></li>\n\
+            <li><textarea name='post[\"content\"]' cols='40' rows='20'></textarea></li>\n\
             <li><button>Post</button></li>\n\
            </ul></form>");
-      if(this.post){
-        $("input","#container").val(this.post.title)
-        $("textarea","#container").val(this.post.content)
+      if(!this.post.isNew()){
+        $("input","#container").val(this.post.get('title'))
+        $("textarea","#container").val(this.post.get('content'))
+        $("button","#container").text("Update")
       }
     },
     save:function(){
-      this.post.save()
+      this.post.save({post :{
+          title:$("input").val(),content:$("textarea").val()
+        }},{
+          success:function(model,response){
+            Backbone.history.navigate("/posts/" + model.id)
+          }
+      });
+      return false;
     }
   });
 
-  //Aplication View
 
-//  var app_view = Backbone.View.extend({
-//    el: $("#container"),
-//    events:{
-//      "submit form#new_post":"createPost"
-//    }
-//  })
-
-  //  Posts.trigger("change");
+  App.Views.Show = Backbone.View.extend({
+    el:$("#container"),
+    initialize:function(){
+      this.post = this.options.post
+      this.render();
+    },
+    render:function(){
+      log("In show render");
+      $(this.el).html('');
+      $.template("posts_show","<h2>${title}</h2>\n\
+        <div>${content}</div>\n\
+        <div class='post-footer'>\n\
+          <ul class='left'>\n\
+            <li>Posted on <span>${created_at}</span></li>\n\
+          </ul>\n\
+          <ul class='right'><li><a href='#/posts/edit/${id}'>edit</a></li></ul>\n\
+        </div>");
+      $.tmpl("posts_show",this.post).appendTo("#container");
+    }
+  })
 
   App.Controllers.Posts = Backbone.Router.extend({
       routes:{
+          "/": "index",
           "": "index",
-          "new": "newPost",
-          "posts/:id": "edit"
+          "/new": "newPost",
+          "/posts/:id": "show",
+          "/posts/edit/:id": "edit",
+          "/:year/:month/:permalink":"show",
+          "/:permalink":"show"
       },
       newPost:function(){
-        new App.Views.Edit({model: new Post()})
+        new App.Views.Edit({post: new Post()})
       },
       index:function(){
         var posts = new App.Collections.Posts
@@ -120,15 +133,25 @@ jQuery(function($){
         var post = new Post({id:id})
         post.fetch({
           success:function(model,response){
-            new App.Views.Edit({post:response})
+            new App.Views.Edit({post:model})
           },
           error:function(){
             new Error({message:"Cound not find the document"})
             window.location.hash = '#'
           }
         })
+      },
+      show:function(id){
+        var post = new Post({permalink:id})
+        if(typeof(id) == "string") post.url = "/"+id
+        if(arguments.length == 3 ) post.url = "/" + $.makeArray(arguments).join("/")
+        
+        post.fetch({
+          success:function(xhr,response){
+            new App.Views.Show({post:response})
+          }
+        })
       }
-      
   })
 });
 
@@ -140,5 +163,13 @@ var App = {
   init:function(){
     new App.Controllers.Posts();
     Backbone.history.start();
+  }
+}
+
+
+var mode = "dev"
+function log(msg){
+  if(mode == "dev"){
+    console.log(msg)
   }
 }
